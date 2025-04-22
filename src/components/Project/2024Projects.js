@@ -1,29 +1,12 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import data from "./2024_details.json";
 import dagshub from "../../pages/Images/dagshub.png";
 import clueless from "../../pages/Images/clueless.png";
 import flutterK from "../../pages/Images/flutterK.png";
 
-function Project2023_Search() {
-    let [projects, setProjects] = useState([]);
-
-    useEffect(() => {
-        // Fetch data when component mounts
-        const fetchData = async () => {
-            try {
-                const response = await fetch("/api/add-project/get-all");
-                const result = await response.json();
-                console.log(result.data);
-                console.log(projects)
-                setProjects(result.data || []);
-            } catch (error) {
-                console.error("Error fetching additional projects:", error);
-            }
-        };
-        
-        fetchData();
-    }, []);
+function Project2024_Search() {
+    let [projects, setProjects] = useState(data);
 
     const searchHandler = (e) => {
         console.log(e.target.value);
@@ -59,7 +42,7 @@ function Project2023_Search() {
                             {el.special === true ? (
                                 [
                                     el.dagshub === true ? (
-                                        <div className="nwoc-repo-card">
+                                       <div className="nwoc-repo-card">
                                             <a href={el["githubLink"]} target="_blank" rel="noreferrer">
                                                 <div className="repo-heading">
                                                     <img
@@ -102,7 +85,7 @@ function Project2023_Search() {
                                             !el.flutterK ? (
                                                 <div className="nwoc-repo-card">
                                                     <a
-                                                        href={el["githubLink"]}
+                                                        href={el["repo-url"]}
                                                         target="_blank"
                                                         rel="noreferrer"
                                                     >
@@ -114,7 +97,7 @@ function Project2023_Search() {
                                                             />
                                                             <a
                                                                 className="repo-title-aviyel"
-                                                                href={el["githubLink"]}
+                                                                href={el["repo-url"]}
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                             >
@@ -145,7 +128,7 @@ function Project2023_Search() {
                                             ) : (
                                                 <div className="nwoc-repo-card">
                                                     <a
-                                                        href={el["githubLink"]}
+                                                        href={el["repo-url"]}
                                                         target="_blank"
                                                         rel="noreferrer"
                                                     >
@@ -157,7 +140,7 @@ function Project2023_Search() {
                                                             />
                                                             <a
                                                                 className="repo-title-aviyel"
-                                                                href={el["githubLink"]}
+                                                                href={el["repo-url"]}
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                             >
@@ -191,7 +174,7 @@ function Project2023_Search() {
                                 ]
                             ) : (
                                 <div className="nwoc-repo-card">
-                                    <a href={el["githubLink"]} target="_blank" rel="noreferrer">
+                                    <a href={el["repo-url"]} target="_blank" rel="noreferrer">
                                         <div className="repo-heading">
                                             <img
                                                 className="githubimg"
@@ -200,7 +183,7 @@ function Project2023_Search() {
                                             />
                                             <a
                                                 className="repo-title"
-                                                href={el["githubLink"]}
+                                                href={el["repo-url"]}
                                                 target="_blank"
                                                 rel="noreferrer"
                                             >
@@ -210,16 +193,16 @@ function Project2023_Search() {
                                     </a>{" "}
                                     <div className="repo-desc">{el.description}</div>
                                     <div className="repo-mentors">
-                                        Mentor: {"  "}
-                                        {el.mentor &&
+                                        Mentors: {"  "}
+                                        {el.mentors.map((mentor) => (
                                             <a
-                                                href={el.mentorGithub}
+                                                href={"https://github.com/" + mentor}
                                                 target="_blank"
                                                 rel="noreferrer"
                                             >
-                                                {el.mentor + " "}
+                                                {mentor + " "}
                                             </a>
-                                        }
+                                        ))}
                                     </div>
                                     <ul className="repo-stats">
                                         <li>
@@ -248,4 +231,4 @@ function Project2023_Search() {
         </>
     );
 }
-export default Project2023_Search;
+export default Project2024_Search;
